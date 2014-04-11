@@ -1,6 +1,3 @@
-require 'HTTParty'
-require 'json'
-
 # Similar subreddits returned based on author posts (and comments to come later).
 # This should help with market research.
 
@@ -12,46 +9,68 @@ require 'json'
 
 
 # LIST OF THINGS TO BE DONE LATER
-# should add a counter for number of calls to pace the work.
-# should add ability to look further back than first 20
-
-# Grab some input (which subreddit, how many posts, --how to sort)
+# should add a counter for API calls to pace the work.
+# should add ability to look further back than first 100
 
 
-puts "Which subreddit?"
-subreddit = gets.chomp
-
-puts "How many? (1-100)"
-n_posts = gets.chomp
-
-base_url = "http://api.reddit.com"
-subreddit = "/r/" + subreddit
-url = base_url + subreddit + "/new.json?limit=" + n_posts
-
-# Grab the last n_posts
-reddit_posts = HTTParty.get(url)
-reddit_json = JSON.parse(reddit_posts.body)
-
-# Create a hash of post_authors hash with the number of users and count of posts
-post_authors = Hash.new(0)
-posts = reddit_json['data']['children']
-posts.each {|post| post_authors[post['data']['author']] += 1}
-
-# Sort and print 
-post_authors = post_authors.sort_by {|k, v| v}
-post_authors.reverse!
-post_authors.each {|author, times|
-	puts "#{author} has posted #{times.to_s} in this sample."}
-
-# Count number of total
-number_of_posts = 0
-post_authors.each {|author, times| number_of_posts += times}
-puts ""
-puts "There were a total of #{post_authors.count} authors"
-puts ""
-puts "A total of #{number_of_posts} were returned, #{n_posts} were requested."
+require 'HTTParty'
+require 'json'
 
 
+def get_users(subreddit, n)
+	#subreddit (str) is the subreddit to be studied
+	#n (int) is the number of posts to analyze -- this will be removed when I can get all
+	#returns an array of users ["user1", "user2", ...]
+	base_url = "http://api.reddit.com"
+	subreddit = "/r/" + subreddit
+	url = base_url + subreddit + "/new.json?limit=" + n.to_s
 
-# Next step, iterate through the post authors
-# post_authors.each
+	# Grab the last n_posts
+	reddit_json = HTTParty.get(url)
+	reddit_hash = JSON.parse(reddit_json.body, :symbolize_names => true)
+
+	# Create a hash of post_authors with the number of users and count of posts
+	post_authors = Hash.new(0)
+	posts = reddit_hash[:data][:children]
+	posts.each {|post| post_authors[post[:data][:author].to_sym] += 1}
+
+	# remove deleted users
+	post_authors.delete_if {|k, v| k == :'[deleted]'}
+
+	#sort
+	post_authors = post_authors.sort_by {|k, v| v}
+	post_authors.reverse!
+
+	authors_array = []
+	post_authors.each{|a| authors_array << a[0]}
+
+	#return the array
+	return authors_array
+end
+# Test for get_contributors
+puts get_users("gaybrosgonewild", 20)
+
+def get_user_posts(user)
+	# contributor (sym) is the user name of the contributor to a subreddit
+	# returns a hash of the user's posts
+	base_url = "http://api.reddit.com"
+	url = "#{base_url}/user/#{user}/submitted/new.json?limit=100"
+	response = HTTParty.get(url)
+	if response.code == 200
+		data = JSON.parse(response.body, :symbolize_names => true)
+	end
+
+	# Go through the posts and build a hash of hashes
+	# subreddit[:subreddit][:posts]=count  subreddit[:subreddit][:authors]={}
+	subreddit_hash = Hash.new(0)
+	data[:data][:children].each do |post|
+		subreddit = post[:data][:subreddit].to_sym
+		subreddit_hash[subreddit] += 1
+	end
+
+	return subreddit_hash
+end
+# Test for get_posts_of_contributor
+puts get_user_posts(get_users("gaybrosgonewild", 30)[3]).each {|k, v| 
+	"#{k} has #{v} posts."}
+
