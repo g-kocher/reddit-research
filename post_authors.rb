@@ -22,6 +22,62 @@ class Subreddit
 	end
 
 
+	@@subreddit_posts = Hash.new(0)
+	@@subreddit_users = Hash.new(0)
+
+
+	def get_user_posts(user)
+		# contributor (sym) is the user name of the contributor to a subreddit
+		# returns a hash of the user's posts
+		base_url = "http://api.reddit.com"
+		url = "#{base_url}/user/#{user}/submitted/new.json?limit=100"
+		response = HTTParty.get(url)
+
+		subreddit_hash = Hash.new(0)
+
+		if response.code == 200
+			data = JSON.parse(response.body, :symbolize_names => true)
+
+			# Go through the posts and count number of posts per subreddit
+			data[:data][:children].each do |post|
+				subreddit = post[:data][:subreddit].to_sym
+				subreddit_hash[subreddit] += 1
+			end
+		end
+		puts "Finished with #{user}"
+		return subreddit_hash
+	end
+
+	def get_subreddits(n)
+		users = get_users(n)
+		posts = []
+
+		users.each do |user|
+			posts << get_user_posts(user)
+		end
+
+		posts.each do |post|
+			post.each_key do |key|
+				@@subreddit_users[key.to_sym] += 1
+				@@subreddit_posts[key.to_sym] += post[key]
+			end
+		end
+
+		subreddits = []
+
+		@@subreddit_users.each_key do |k|
+			user_count = @@subreddit_users[k]
+			post_count  = @@subreddit_posts[k]
+
+			subreddits << [k, user_count, post_count]
+			subreddits = subreddits.sort_by {|s, u, p| u}
+			subreddits.reverse!
+		end
+
+		return subreddits
+	end
+
+	private
 	def get_users(n)
 		#subreddit (str) is the subreddit to be studied
 		#n (int) is the number of posts to analyze -- this will be removed when I can get all
@@ -53,69 +109,6 @@ class Subreddit
 		puts "Author Array Complete"
 		return authors_array
 	end
-	# Test for get_contributors
-	#test_users = get_users("gaybrosgonewild", 20)
-	#puts test_users
-
-	def get_user_posts(user)
-		# contributor (sym) is the user name of the contributor to a subreddit
-		# returns a hash of the user's posts
-		base_url = "http://api.reddit.com"
-		url = "#{base_url}/user/#{user}/submitted/new.json?limit=100"
-		response = HTTParty.get(url)
-
-		subreddit_hash = Hash.new(0)
-
-		if response.code == 200
-			data = JSON.parse(response.body, :symbolize_names => true)
-
-			# Go through the posts and count number of posts per subreddit
-			data[:data][:children].each do |post|
-				subreddit = post[:data][:subreddit].to_sym
-				subreddit_hash[subreddit] += 1
-			end
-		end
-		puts "Finished with #{user}"
-		return subreddit_hash
-	end
-	# Test for get_posts_of_contributor
-	#test_user_reddits = get_user_posts(test_users[3])
-	#test_user_reddits.each do |k, v|
-	#	puts "#{k} has #{v} posts."
-	#end
-
-	@@subreddit_posts = Hash.new(0)  #these need to be in a class to work with the method
-	@@subreddit_users = Hash.new(0)
-
-	def get_subreddits(n)
-		users = get_users(n)
-		posts = []
-
-		users.each do |user|
-			posts << get_user_posts(user)
-		end
-
-		posts.each do |post|
-			post.each_key do |key|
-				@@subreddit_users[key.to_sym] += 1
-				@@subreddit_posts[key.to_sym] += post[key]
-			end
-		end
-
-		subreddits = []
-
-		@@subreddit_users.each_key do |k|
-			user_count = @@subreddit_users[k]
-			post_count  = @@subreddit_posts[k]
-
-			subreddits << [k, user_count, post_count]
-			subreddits = subreddits.sort_by {|s, u, p| u}
-			subreddits.reverse!
-		end
-
-		return subreddits
-	end
-
 
 end
 
