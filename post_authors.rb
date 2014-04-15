@@ -75,6 +75,7 @@ class Subreddit
 				subreddit_hash[subreddit] += 1
 			end
 		end
+		puts "Finished with #{user}"
 		return subreddit_hash
 	end
 	# Test for get_posts_of_contributor
@@ -118,32 +119,15 @@ class Subreddit
 
 end
 
-renewableEnergy = Subreddit.new("renewableenergy")
-who = renewableEnergy.get_users(10)
-puts who
+puts "Which subreddit would you like to investigate?"
+sr = gets.chomp
 
-which = renewableEnergy.get_subreddits(100)
+puts "How far back? (1-100)"
+n = gets.chomp.to_i
+
+renewableEnergy = Subreddit.new(sr)
+
+which = renewableEnergy.get_subreddits(n)
 which.each do |subreddit, users, posts|
 	puts "#{subreddit} has #{posts} posts from #{users} users."
 end
-
-
-=begin
-recent_users = get_users('renewableenergy', 5)
-
-user_posts = []
-recent_users.each {|user| user_posts << get_user_posts(user)}
-
-
-user_posts.each {|posts, user| get_subreddits(posts, user)}
-
-subreddit_posts.each do |k, v|
-	puts "#{k} has #{v} posts."
-end
-
-puts "===================================="
-
-subreddit_users.each do |k, v|
-	puts "#{k} has #{v} users"
-end
-=end
