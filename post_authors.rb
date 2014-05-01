@@ -11,8 +11,16 @@
 # LIST OF THINGS TO BE DONE LATER
 # should add a counter for API calls to pace the work.
 # should add ability to look further back than first 100
+require 'sinatra/base'
 
-class Subreddit
+class App < Sinatra::Base
+	get '/' do
+		'Hello World!'
+	end
+end
+
+
+class Subreddits
 
 	require 'HTTParty'
 	require 'json'
