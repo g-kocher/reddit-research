@@ -1,0 +1,11 @@
+body{
+	margin: 0;
+	padding: 0 0 70px 0;
+	background-image:url("");
+	background-repeat: none;
+	background-size: 100%;
+
+}
+.jumbotron{
+	opacity: .85;
+}

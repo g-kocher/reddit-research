@@ -25,6 +25,11 @@ class Subreddits
 	@@subreddit_users = Hash.new(0)
 	@@base_url = "http://api.reddit.com"
 
+	def validate_subreddit
+		# validate that the subreddit requested exists
+	end
+
+
 	def get_users(n)
 		#subreddit (str) is the subreddit to be studied
 		#n (int) is the number of posts to analyze -- this will be removed when I can get all

@@ -1,3 +1,3 @@
-require "app"
+require './my_app'
 
-run App.new
+run MyApp.new
