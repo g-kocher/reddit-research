@@ -117,7 +117,7 @@ class Subreddits
 				subreddit_hash[subreddit] += 1
 			end
 		end
-		# yield update class % for load bar
+		# yield update % for load bar
 		return subreddit_hash
 	end
 end
