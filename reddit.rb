@@ -28,8 +28,10 @@ class Reddit
 			posts = data[:data][:children]
 			users = []
 			posts.each  {|post| users << post[:data][:author]}
-			users.delete_if {|user| user == ':[deleted]' }
+			users.delete_if {|user| user.to_s == '[deleted]' }
+			puts users
 			users.uniq!
+			users = users.reverse.drop(users.length - 29) unless users.length <= 29
 			return users
 		end
 	end
