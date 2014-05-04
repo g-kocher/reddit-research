@@ -7,44 +7,45 @@
 		</div>
 		<!-- Form -->
 		<div class="panel-body" id="search_form">
-			<form name="subreddit-form" id="subreddit-form" role="form" action="#" method="" data-async></form>
-				<div class="input-group">
-					<label for="subreddit" class="input-group-addon">reddit.com/r/</label>
-					<input type="text" class="form-control" id="subreddit" name="subreddit" value="sinatra" required>
-				</div>
+			<div class="input-group">
+				<label for="subreddit" class="input-group-addon">reddit.com/r/</label>
+				<input type="text" class="form-control" id="subreddit" name="subreddit" value="sinatra" required>
+			</div>
 
-				<div class="row">
-					<div class="col-md-6 col-xs-12">
-						<div class="radio">
-								<input type="radio" name="order" id="order" value="top" checked>
-							<label for="">
-								Top
-							</label>
-						</div>
-						<div class="radio">
-								<input type="radio" name="order" id="order" value="new">
-							<label for="">
-								New
-							</label>
-						</div>
-						<div class="radio">
-							<input type="radio" name="order" id="order" value="rising">
-							<label for="">
-								Rising
-							</label>
-						</div>
-						<br>
+			<div class="row">
+				<div class="col-md-6 col-xs-12">
+					
+					<div class="radio">
+							<input type="radio" name="order" id="order" value="top" checked>
+						<label for="">
+							Top
+						</label>
 					</div>
-				</div>
 
-				<div class="row">
-					<div class="col-xs-12">
-						<button type="submit" id="submit" class="btn btn-primary">
-							Lets go! <span class="glyphicon glyphicon-ok"></span>
-						</button>
+					<div class="radio">
+							<input type="radio" name="order" id="order" value="new">
+						<label for="">
+							New
+						</label>
 					</div>
+
+					<div class="radio">
+						<input type="radio" name="order" id="order" value="rising">
+						<label for="">
+							Rising
+						</label>
+					</div>
+					<br>
 				</div>
-			</form>
+			</div>
+
+			<div class="row">
+				<div class="col-xs-12">
+					<button type="submit" id="submit" class="btn btn-primary">
+						Lets go! <span class="glyphicon glyphicon-ok"></span>
+					</button>
+				</div>
+			</div>
 
 		</div>
 	</div>

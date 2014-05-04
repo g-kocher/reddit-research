@@ -1,5 +1,6 @@
-$('#submit').click(function(event){
-	$('#results').html($.get('/'+$('input#subreddit').val()+'/'+$('#order').val()))
+$('#submit').click(function(){
+	$('#results').html('')
+	$('#results').load($('input#subreddit').val()+'/'+$('#order').val())
 })
 
 

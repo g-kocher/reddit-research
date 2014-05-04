@@ -1,0 +1,12 @@
+<table class="table">
+	<tr>
+		<th>Subreddit</th>
+		<th># of users</th>
+	</tr>
+	<% @subreddits.each do |subreddit| %>
+		<tr class="">
+			<td><%= subreddit[0] %></td>
+			<td><%= subreddit[1] %></td>
+		</tr>
+	<% end %>
+</table>

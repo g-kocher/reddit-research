@@ -1,11 +1,12 @@
 require 'bundler/setup'
 require 'sinatra/base'
 require 'sinatra/content_for'
+require_relative 'reddit'
 
 
 
 class MyApp < Sinatra::Base
-	helper Sinatra::ContentFor
+	helpers Sinatra::ContentFor
 	set :static, true
 	set :public_folder, File.dirname(__FILE__) + '/static'
 
@@ -16,10 +17,23 @@ class MyApp < Sinatra::Base
 		erb :index
 	end
 
-	post '/:subreddit/:order' do
-		subreddits(params[subreddit],params[order])
-		erb :results, :layout => !request.xhr?
-	end	
+	# /subreddit/order
+	get '/:subreddit/:order' do
+		@subreddit = params[:subreddit]
+		@order = params[:order]
+		
+		related = Reddit.new(@subreddit, @order)
+		@subreddits = related.subreddits_array()
 
+		content_for :title do
+			"#{@subreddit}/#{@order}"
+		end
+		erb :results, :layout => !request.xhr?
+	end
+=begin
+	# /subreddit/order.json
+	get '/:subreddit/:order.json', '/:subreddit/:order/.json' do
+		interested = Reddit.new()
+=end
 end
 
