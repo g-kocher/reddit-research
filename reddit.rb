@@ -6,7 +6,7 @@ class Reddit
 
 
 	def initialize(subreddit, order)
-		@subreddit_url = "#{@@base_url}r/#{subreddit}/#{order}.json?limit=29"
+		@subreddit_url = "#{@@base_url}r/#{subreddit}/#{order}.json?limit=100&t=all"
 	end
 
 	def subreddits_array()
