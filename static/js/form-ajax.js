@@ -1,6 +1,7 @@
-$('#submit').click(function(){
+$('#search-form').submit(function(e){
+	e.preventDefault()
 	$('#results').html('')
-	$('#results').load($('input#subreddit').val()+'/'+$('#order').val())
+	$('#results').load($('input#subreddit').val()+'/'+$('input[name="order"]:checked').val())
 })
 
 
