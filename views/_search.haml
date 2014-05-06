@@ -1,0 +1,29 @@
+/ Search
+.col-xs-12.col-md-6.col
+	.panel.panel-primary
+		/ Heading 
+		.panel-heading
+			%h3.panel-title Search
+		/ Form
+		.panel-body
+			%form#search-form
+				.input-group
+					%label.input-group-addon{:for=>"subreddit"} reddit.com/r/
+					%input#subreddit.form-control{:type=>"text", :name=>"subreddit", :value=>"sinatra", :required=>""}
+
+				.row
+					.col-md-6.col-xs-12
+						.radio
+							%input#order{:type=>"radio", :name=>"order", :value=>"new", :checked=>""}
+							%label New
+						.radio
+							%input#order{:type=>"radio", :name=>"order", :value=>"top"}
+							%label Top
+						.radio
+							%input#order{:type=>"radio", :name=>"order", :value=>"rising"}
+							%label Rising
+						%br
+				.row
+					.col-xs-12
+						%button#submit.btn.btn-primary{:type=>"submit"} Lets go!
+/ /Search

@@ -1,8 +1,8 @@
 $('#search-form').submit(function(e){
 	e.preventDefault()
-	$('#results').html('')
-	$('#results').load($('input#subreddit').val()+'/'+$('input[name="order"]:checked').val())
-})
+	$('#results').html('');
+	$('#results').load($('input#subreddit').val()+'/'+$('input[name="order"]:checked').val());
+});
 
 
 
