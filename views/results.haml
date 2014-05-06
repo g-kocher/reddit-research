@@ -1,0 +1,9 @@
+%table.table
+	%tr
+		%th Subreddit
+		%th # of users
+	- @subreddits.each do |subreddit|
+		%tr
+			%td
+				%a{:href=>"http://reddit.com/r/<%=subreddit[0]%>", :target=>"_blank"}=  subreddit[0]
+			%td= subreddit[1]

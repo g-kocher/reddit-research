@@ -14,7 +14,7 @@ class MyApp < Sinatra::Base
 
 	#Root route
 	get '/' do
-		erb :index
+		haml :index
 	end
 
 	# /subreddit/order
@@ -28,7 +28,7 @@ class MyApp < Sinatra::Base
 		content_for :title do
 			"#{@subreddit}/#{@order}"
 		end
-		erb :results, :layout => !request.xhr?
+		haml :results, :layout => !request.xhr?
 	end
 =begin
 	# /subreddit/order.json

@@ -1,0 +1,20 @@
+- content_for :title do
+	Related Reddits
+
+- content_for :body do
+	/ Jumbotron
+	%header
+		.container
+			.jumbotron
+				%h1 Related Subreddits
+				%p Ever wondered what other subreddits people hang out on?
+	/ /Jumbotron
+
+	.container
+		.row
+			= haml :_search
+			= haml :_results
+
+
+- content_for :script do
+	%script{:src=>"js/form-ajax.js", :type=>"text/javascript"}
