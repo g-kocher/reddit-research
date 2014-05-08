@@ -1,5 +1,5 @@
 source 'https://rubygems.org'
-ruby '2.0.0'
+ruby '2.0.0-p353'
 
 gem 'sinatra-base', '~> 1.4.0'
 gem 'sinatra-contrib', '~> 1.4.2'
