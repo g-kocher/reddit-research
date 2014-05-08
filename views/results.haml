@@ -1,9 +1,11 @@
-%table.table
-	%tr
-		%th Subreddit
-		%th # of users
-	- @subreddits.each do |subreddit|
+
+- content_for :body do
+	%table.table
 		%tr
-			%td
-				%a{:href=>"http://reddit.com/r/#{subreddit[0]}", :target=>"_blank"}=  subreddit[0]
-			%td= "<span class='badge alert-info'>#{subreddit[1]}</span>"
+			%th Subreddit
+			%th # of users
+		- @subreddits.each do |subreddit|
+			%tr
+				%td
+					%a{:href=>"http://reddit.com/r/#{subreddit[0]}", :target=>"_blank"}=  subreddit[0]
+				%td= "<span class='badge alert-info'>#{subreddit[1]}</span>"

@@ -5,6 +5,10 @@ require_relative 'models/reddit'
 
 
 
+
+
+
+
 class MyApp < Sinatra::Base
 	helpers Sinatra::ContentFor
 	set :static, true
@@ -17,19 +21,22 @@ class MyApp < Sinatra::Base
 		haml :index
 	end
 
-	# /subreddit/order
-	get '/:subreddit/:order' do
-		@subreddit = params[:subreddit]
-		@order = params[:order]
-		
-		related = Reddit.new(@subreddit, @order)
-		@subreddits = related.subreddits_array()
 
-		content_for :title do
-			"#{@subreddit}/#{@order}"
-		end
-		haml :results, :layout => !request.xhr?
+	# /subreddit/order    
+	get %r{/(\w{3,})\/(new|top|rising)} do
+		@subreddit = params[:captures][0]
+		@order = params[:captures][1]
+		@subreddits = Reddit.new(@subreddit, @order).subreddits_array()
+		haml :results
 	end
+
+	get %r{/(\w{3,})} do
+
+
+	error 404 do
+		redirect to('/')
+	end
+
 =begin
 	# /subreddit/order.json
 	get '/:subreddit/:order.json', '/:subreddit/:order/.json' do

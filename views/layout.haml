@@ -4,18 +4,19 @@
 		%meta{:charset=>"utf-8"}/
 		%meta{"http-equiv"=>"X-UA-Compatible", :content=>"IE=edge"}/
 		%meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}/
-		%title= yield_content :title
+		%title Related Reddits
 		/ Bootstrap
 		%link{:href=>'css/bootstrap.min.css', :rel=>'stylesheet'}/
 		%link{:href=>'css/bootstrap-theme.min.css', :rel=>'stylesheet'}/
 		%link{:href=>'css/style.css', :rel=>'stylesheet'}/
-		%script{:type=>'text/javascript', :src=>'//cdnjs.cloudflare.com/ajax/libs/spin.js/1.2.7/spin.min.js'}
 
 		/ HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries
 		/ WARNING: Respond.js doesn't work if you view the page via file://
 		/ [if lt IE 9]
 		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+
+
 
 	%body
 		= yield_content :body
