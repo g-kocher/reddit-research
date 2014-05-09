@@ -31,6 +31,9 @@ class MyApp < Sinatra::Base
 	end
 
 	get %r{/(\w{3,})} do
+		@subreddit = params[:captures][0]
+		redirect to("#{@subreddit}/new")
+	end
 
 
 	error 404 do
