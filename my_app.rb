@@ -40,10 +40,5 @@ class MyApp < Sinatra::Base
 		redirect to('/')
 	end
 
-=begin
-	# /subreddit/order.json
-	get '/:subreddit/:order.json', '/:subreddit/:order/.json' do
-		interested = Reddit.new()
-=end
 end
 
